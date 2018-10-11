@@ -3,7 +3,7 @@
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header">
                   <div class="d-flex align-items-center">
@@ -30,7 +30,21 @@
                           </div>
                         </div>
                         <div class="media-body">
-                          <h3 class="mt-0"><a href="{{ $question->url }}">{{$question->title}}</a></h3>
+                          <div class="d-flex align-items-center">
+                            <h3 class="mt-0"><a href="{{ $question->url }}">{{$question->title}}</a></h3>
+                            <div class="ml-auto">
+                              @can('update', $question)
+                                <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-outline-info btn-sm">Edit</a>
+                              @endcan
+                              @can('delete', $question)
+                              <form class="d-inline" method="post" action="{{ route('questions.destroy', $question->id)}}">
+                                @method('DELETE')
+                                @csrf
+                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                              </form>
+                            @endcan
+                            </div>
+                          </div>
                           <p class="lead">
                             Asked by
                             <a href="{{ $question->user->url }}"> {{ $question->user->name }}</a>
