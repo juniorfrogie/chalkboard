@@ -23,7 +23,7 @@
                             <strong>{{ $question->votes }}</strong> {{ str_plural('vote', $question->votes) }}
                           </div>
                           <div class="status {{ $question->status }}">
-                            <strong>{{ $question->answers }}</strong> {{ str_plural('answer', $question->answers)}}
+                            <strong>{{ $question->answers_count }}</strong> {{ str_plural('answer', $question->answers_count)}}
                           </div>
                           <div class="view">
                             {{ $question->views . " " . str_plural('view', $question->views)}}
@@ -37,12 +37,12 @@
                                 <a href="{{ route('questions.edit', $question->id) }}" class="btn btn-outline-info btn-sm">Edit</a>
                               @endcan
                               @can('delete', $question)
-                              <form class="d-inline" method="post" action="{{ route('questions.destroy', $question->id)}}">
-                                @method('DELETE')
-                                @csrf
-                                <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</button>
-                              </form>
-                            @endcan
+                                <form class="d-inline" method="post" action="{{ route('questions.destroy', $question->id)}}">
+                                  @method('DELETE')
+                                  @csrf
+                                  <button type="submit" class="btn btn-sm btn-outline-danger" onclick="return confirm('Are you sure?')">Delete</button>
+                                </form>
+                              @endcan
                             </div>
                           </div>
                           <p class="lead">

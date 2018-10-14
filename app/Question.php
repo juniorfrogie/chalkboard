@@ -31,8 +31,8 @@ class Question extends Model
 
     public function getStatusAttribute()
     {
-      if ($this->answers > 0) {
-        if ($this->best_answer_id) {
+      if ($this->answers_count > 0) {
+        if ($this->accepted_answer_id) {
           return "answered-accepted";
         }
         return "answered";
@@ -43,5 +43,16 @@ class Question extends Model
     public function getContentHtmlAttribute()
     {
       return \Parsedown::instance()->text($this->content);
+    }
+
+    public function answers()
+    {
+      return $this->hasMany(Answer::class);
+    }
+
+    public function acceptBestAnswer(Answer $answer)
+    {
+      $this->accepted_answer_id = $answer->id;
+      $this->save();
     }
 }
